@@ -27,23 +27,7 @@ const apiUrl = import.meta.env.BACKEND_URL || 'http://localhost:3000';
 
 <template id="menu-item">
     <li>
-        <a id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="block py-2 pr-4 pl-3 text-gray-500 hover:text-gray-950 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0" type="button">
-            Dropdown hover 
-            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-            </svg>
-        </a>
-        <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
-        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
-        
-        </ul>
-    </div>
-    </li>
-</template>
-
-<template id="menu-item-sub">
-    <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+        <a href="/admin/manage-content" class="block py-2 pr-4 pl-3 text-gray-500 hover:text-gray-950 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0" aria-current="page"></a>
     </li>
 </template>
 
