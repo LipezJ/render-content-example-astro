@@ -1,11 +1,19 @@
-import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 
-import { createContent, getAllContent, getContent, updateContent } from './lib/content.js'
+import authApp from './apps/auth.js'
+import menusApp from './apps/menus-api.js'
+import contentApp from './apps/content-api.js'
 
-const app = new Hono()
+export type App = {
+  Variables: {
+    role: string
+  }
+}
+
+const app = new Hono<App>()
 
 app.use('*', cors({
   origin: '*',
@@ -13,36 +21,11 @@ app.use('*', cors({
   allowHeaders: ['Content-Type'],
 }))
 
-app.get('/api/content', async (c) => {
-  const path = c.req.query('path');
-  if (!path) {
-    const allContent = await getAllContent();
-    return c.json(allContent);
-  }
-  const content = await getContent(path);
-  if (!content) {
-    return c.json({ error: 'Content not found' }, 404);
-  }
-  return c.json(content);
-})
+app.route('/', authApp)
+app.route('/api/content', contentApp)
+app.route('/api/menus', menusApp)
 
-app.post('/api/content', async (c) => {
-  const form = await c.req.formData();
-  if (!form.has('title') || !form.has('description') || !form.has('content') || !form.has('path')) {
-    return c.json({ error: 'Invalid content' }, 400);
-  }
-  
-  const result = await createContent(form);
-  return c.json(result);
-})
-
-app.put('/api/content', async (c) => {
-  const content = await c.req.json();
-  const result = updateContent(content);
-  return c.json(result);
-})
-
-app.use('/*', serveStatic({ root: './static' }))
+app.use('/*', serveStatic({ root: './static' }));
 
 serve({
   fetch: app.fetch,
