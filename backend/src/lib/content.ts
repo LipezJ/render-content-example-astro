@@ -9,30 +9,21 @@ interface Content {
 }
 
 export const getContent = async (path: string): Promise<Content> => {
-  const contentQuery = "SELECT * FROM content WHERE path = ?";
-  
-  return new Promise((resolve, reject) => {
-    db.get(contentQuery, path, (err, row: Content) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(row);
-      }
-    });
-  });
+  const contentQuery = db.prepare(`SELECT * FROM content WHERE path = ?`);
+  const content = contentQuery.get(path) as Content;
+
+  if (!content) {
+    throw new Error('Content not found');
+  }
+
+  return content;
 }
 
 export const getAllContent = async (): Promise<Content[]> => {
-  const contentQuery = "SELECT * FROM content";
-  return new Promise((resolve, reject) => {
-    db.all(contentQuery, [], (err, rows: Content[]) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
-      }
-    });
-  });
+  const contentQuery = db.prepare(`SELECT * FROM content`);
+  const contentList = contentQuery.all() as Content[];
+
+  return contentList;
 }
 
 export const createContent = async (form: FormData) => {
@@ -45,15 +36,21 @@ export const createContent = async (form: FormData) => {
 
   const contentQuery = db.prepare(`INSERT INTO content (title, description, content, path) VALUES (?, ?, ?, ?)`);
   const result = contentQuery.run(content.title, content.description, content.content, content.path);
-  contentQuery.finalize();
 
-  return result;
+  if (result.changes === 0) {
+    throw new Error('Failed to create content');
+  }
+
+  return { ok: true };
 }
 
 export const updateContent = async (content: Content) => {
   const contentQuery = db.prepare(`UPDATE content SET title = ?, description = ?, content = ?, path = ? WHERE path = ?`);
   const result = contentQuery.run(content.title, content.description, content.content, content.path, content.path);
-  contentQuery.finalize();
+  
+  if (result.changes === 0) {
+    throw new Error('Failed to update content');
+  }
 
-  return result;
+  return { ok: true };
 }
