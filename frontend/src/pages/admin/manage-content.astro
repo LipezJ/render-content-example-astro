@@ -1,0 +1,12 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ContentForm from "../../components/ContentForm.astro";
+
+const apiUrl = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+---
+
+<Layout title="Manage Content">
+  <main>
+    <ContentForm apiUrl={apiUrl} />
+  </main>
+</Layout>

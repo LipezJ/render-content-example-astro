@@ -1,0 +1,33 @@
+<link
+  href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+  rel="stylesheet"
+/>
+
+<div id="editor">
+  hola
+</div>
+
+<script>
+  import "https://cdn.jsdelivr.net/npm/quill@2/dist/quill.min.js";
+
+  window.onload = () => {
+    // @ts-ignore
+    const quill = new Quill("#editor", {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline"],
+          ["link", "image"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["clean"],
+        ],
+      },
+    });
+
+    // @ts-ignore
+    window.getEditorContent = () => {
+      return quill.getSemanticHTML();
+    };
+  };
+</script>

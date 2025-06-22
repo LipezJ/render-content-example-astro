@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import { type Content, makeContentRoutes } from "../lib/content";
+
+export const prerender = process.env.ASTRO_STATIC === 'true';
+
+// This will ignore in a ssr mode, but will be used in a static build
+export async function getStaticPaths() {
+  const hostname = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+  return await makeContentRoutes(hostname);
+}
+
+let { title, content } = Astro.props;
+
+// If prerendering, we will fetch the content dynamically
+if (!prerender) {
+  let hostname = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+
+  const res = await fetch(`${hostname}/api/content?path=/${Astro.params.content}`);
+
+  if (!res.ok) {
+    return Astro.redirect('/404');
+  }
+
+  const data: Content = await res.json();
+  title = data.title;
+  content = data.content;
+}
+---
+
+<Layout title={title}>
+  <main class="h-min-[80dvh] h-max mx-auto max-w-6xl px-4 py-8">
+    <Fragment set:html={content} />
+  </main>
+</Layout>
+
+<style is:global>
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+</style>

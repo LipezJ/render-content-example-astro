@@ -1,0 +1,206 @@
+<style>
+  /* --- Resets & helpers --- */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+                 sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  body {
+    margin: 0;
+    background: #f9fafb;
+    color: #111827;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .container {
+    max-width: 1280px;            /* ~max-screen-xl */
+    margin: 0 auto;
+    padding: 2rem 1rem;           /* px-4 py-8 */
+  }
+
+  @media (min-width: 640px) {     /* sm */
+    .container { padding: 4rem 1.5rem; }   /* sm:py-16 lg:px-6 */
+  }
+
+  @media (min-width: 1024px) {    /* lg */
+    .container { padding: 6rem 1.5rem; }   /* lg:py-24 */
+  }
+
+  /* --- Headings & intro --- */
+  .intro {
+    max-width: 42rem;             /* ~max-w-2xl */
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .intro h2 {
+    font-size: 1.875rem;          /* text-3xl */
+    font-weight: 800;             /* font-extrabold */
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 640px) {
+    .intro h2 { font-size: 2.25rem; }      /* sm:text-4xl */
+  }
+
+  .intro p {
+    margin-top: 1rem;
+    font-size: 1rem;              /* text-base */
+    color: #6b7280;               /* gray-500 */
+  }
+
+  @media (min-width: 640px) {
+    .intro p { font-size: 1.25rem; }        /* sm:text-xl */
+  }
+
+  /* --- Grid of projects --- */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem 5rem;               /* gap-y-12 gap-x-20 */
+    margin-top: 3rem;             /* mt-12 */
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .work-grid {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 4rem;           /* sm:mt-16 */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .work-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* --- Individual card --- */
+  .card { display: flex; flex-direction: column; gap: 1rem; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;   /* px-2.5 py-0.5 */
+    font-size: 0.75rem;           /* text-xs */
+    font-weight: 500;
+    background: #f3f4f6;          /* gray-100 */
+    color: #111827;               /* gray-900 */
+    border-radius: 0.375rem;
+  }
+
+  .card h3 {
+    font-size: 1.5rem;            /* text-2xl */
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .card p {
+    font-size: 1.125rem;          /* text-lg */
+    color: #6b7280;               /* gray-500 */
+  }
+
+  /* --- Button --- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.625rem 1.25rem;    /* px-5 py-2.5 */
+    font-size: 0.875rem;          /* text-sm */
+    font-weight: 500;
+    color: #ffffff;
+    background: #1d4ed8;          /* primary-700 */
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .btn:hover { background: #1e40af; }       /* hover:bg-primary-800 */
+
+  .btn:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.4); /* focus:ring-4 primary-300 */
+  }
+
+  .btn svg {
+    width: 1.25rem;               /* w-5 */
+    height: 1.25rem;              /* h-5 */
+    flex-shrink: 0;
+  }
+
+</style>
+
+<section class="section-work">
+  <div class="container">
+
+    <!-- Intro -->
+    <div class="intro">
+      <h2>Our work</h2>
+      <p>Crafted with skill and care to help our clients grow their business!</p>
+    </div>
+
+    <!-- Projects -->
+    <div class="work-grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <span class="badge">Alphabet Inc.</span>
+        <h3>Official website</h3>
+        <p>Someone helps you connect with friends, family and communities of people who share your interests.</p>
+        <a href="#" class="btn" role="button">
+          View case study
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <span class="badge">Microsoft Corp.</span>
+        <h3>Management system</h3>
+        <p>Someone helps you connect with friends, family and communities of people who share your interests.</p>
+        <a href="#" class="btn" role="button">
+          View case study
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <span class="badge">Adobe Inc.</span>
+        <h3>Logo design</h3>
+        <p>Someone helps you connect with friends, family and communities of people who share your interests.</p>
+        <a href="#" class="btn" role="button">
+          View case study
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
