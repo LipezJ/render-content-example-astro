@@ -29,7 +29,6 @@ app.post('/login', async (c) => {
     })
 
     const url = new URL(c.req.header('Origin') || c.req.url)
-    console.log(`Origin URL: ${url.origin}`)
     return c.redirect(`${url.origin}/`, 303)
   }
   
@@ -45,13 +44,28 @@ app.get('/logout', async (c) => {
   return c.redirect(`${url.origin}/login`, 303)
 })
 
-app.use('*', async (c, next) => {
-  console.log(`Request path: ${c.req.path}`)
-  console.log(`Sessions:`, Array.from(sessions.entries()))
+app.get('/api/auth/check', async (c) => {
   const sessionId = await getSignedCookie(c, SECRET, 'session')
+  
   let role = 'guest'
-  console.log(`Session ID: ${sessionId}`)
+  if (sessionId && sessions.has(sessionId)) {
+    role = sessions.get(sessionId) || 'guest'
+  }
 
+  const path = c.req.query('path');
+  if (!path) {
+    return c.json({ ok: false })
+  }
+
+  const isAuthorized = await permissionManager.isAuthorized(path, role)
+
+  return c.json({ ok: true, is_authotized: isAuthorized })
+})
+
+app.use('*', async (c, next) => {
+  const sessionId = await getSignedCookie(c, SECRET, 'session')
+
+  let role = 'guest'
   if (sessionId && sessions.has(sessionId)) {
     role = sessions.get(sessionId) || 'guest'
   }
