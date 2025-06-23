@@ -4,6 +4,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build-static": "set ASTRO_STATIC=true&& npm run build",
+    "build-ssr": "set ASTRO_STATIC=false&& npm run build",
     "preview": "astro preview",
     "astro": "astro"
   },

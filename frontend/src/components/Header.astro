@@ -36,7 +36,7 @@ const apiUrl = import.meta.env.BACKEND_URL || 'http://localhost:3000';
         const menuItemTemplate = document.getElementById('menu-item');
         const menuList = document.querySelector('nav ul');
 
-        fetch(`${apiUrl}/api/menus`)
+        fetch(`${apiUrl}/api/menus`, { credentials: 'include' })
             .then(response => response.json())
             .then(data => {
                 data.forEach(item => {

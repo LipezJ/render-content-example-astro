@@ -18,7 +18,7 @@ app.get('/', async (c) => {
   return c.json(content);
 })
 
-app.post('/', async (c) => {
+app.post('/admin', async (c) => {
   const form = await c.req.formData();
   if (!form.has('title') || !form.has('description') || !form.has('content') || !form.has('path')) {
     return c.json({ error: 'Invalid content' }, 400);
@@ -28,7 +28,7 @@ app.post('/', async (c) => {
   return c.json(result);
 })
 
-app.put('/', async (c) => {
+app.put('/admin', async (c) => {
   const content = await c.req.json();
   const result = updateContent(content);
   return c.json(result);

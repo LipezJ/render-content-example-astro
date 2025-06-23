@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-  import { getSignedCookie, setSignedCookie } from 'hono/cookie'
+import { getSignedCookie, setSignedCookie } from 'hono/cookie'
 import { v4 as uuid } from 'uuid'
 
 import type { App } from '../index.js';
@@ -22,11 +22,15 @@ app.post('/login', async (c) => {
 
     await setSignedCookie(c, 'session', sessionId, SECRET, {
       httpOnly: true,
-      sameSite: 'Lax',
+      sameSite: 'None',
+      secure: true,
+      domain: 'localhost',
       path: '/',
     })
 
-    return c.redirect('/')
+    const url = new URL(c.req.header('Origin') || c.req.url)
+    console.log(`Origin URL: ${url.origin}`)
+    return c.redirect(`${url.origin}/`, 303)
   }
   
   return c.text('Invalid credentials', 401)
@@ -37,12 +41,16 @@ app.get('/logout', async (c) => {
   if (sessionId) sessions.delete(sessionId)
   c.set('role', 'guest')
   c.header('Set-Cookie', 'session=; Path=/; Max-Age=0; HttpOnly')
-  return c.redirect('/login')
+  const url = new URL(c.req.header('Origin') || c.req.url)
+  return c.redirect(`${url.origin}/login`, 303)
 })
 
 app.use('*', async (c, next) => {
+  console.log(`Request path: ${c.req.path}`)
+  console.log(`Sessions:`, Array.from(sessions.entries()))
   const sessionId = await getSignedCookie(c, SECRET, 'session')
   let role = 'guest'
+  console.log(`Session ID: ${sessionId}`)
 
   if (sessionId && sessions.has(sessionId)) {
     role = sessions.get(sessionId) || 'guest'

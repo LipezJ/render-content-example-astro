@@ -28,7 +28,8 @@ db.exec(`
   );
 
   INSERT OR IGNORE INTO permissions (id, path, role) VALUES
-    (1, '/admin/*', 'admin');
+    (1, '/admin/*', 'admin'),
+    (2, '/api/content/admin/*', 'admin');
 
   INSERT OR IGNORE INTO menus (id, name, path, parent, role) VALUES
     (1, 'Dashboard', '/admin', NULL, 'admin'),

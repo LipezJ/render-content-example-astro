@@ -16,9 +16,10 @@ export type App = {
 const app = new Hono<App>()
 
 app.use('*', cors({
-  origin: '*',
+  origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4321'],
   allowMethods: ['GET', 'POST', 'PUT'],
-  allowHeaders: ['Content-Type'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }))
 
 app.route('/', authApp)

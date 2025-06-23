@@ -11,6 +11,8 @@ const isStatic = process.env.ASTRO_STATIC === 'true';
 
 let config;
 
+console.log(isStatic)
+
 if (isStatic) {
   console.log('Building for static output');
   config = {
@@ -24,6 +26,7 @@ if (isStatic) {
   console.log('Building for server output');
   config = {
     output: 'server',
+    outDir: '../server-frontend/dist',
     adapter: node({
       mode: 'middleware',
     }),
