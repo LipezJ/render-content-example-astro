@@ -10,7 +10,8 @@ db.exec(`
     title TEXT NOT NULL,
     description TEXT NOT NULL,
     content TEXT NOT NULL,
-    path TEXT NOT NULL
+    path TEXT NOT NULL,
+    lang TEXT NOT NULL DEFAULT 'es'
   );
 
   CREATE TABLE IF NOT EXISTS permissions (
@@ -37,6 +38,10 @@ db.exec(`
     (3, 'Content', '/complete-page', NULL, 'all'),
     (4, 'Guest content', '/content', NULL, 'guest'),
     (5, 'Content inside', '/complete-page', 4, 'guest');
+
+  INSERT OR IGNORE INTO content (id, title, description, content, path, lang) VALUES
+    (1, 'Welcome', 'Welcome to the Content Management System', 'This is a sample content for the CMS.', '/welcome', 'en'),
+    (2, 'Bienvenido', 'Bienvenido al Sistema de Gestión de Contenidos', 'Este es un contenido de muestra para el CMS.', '/welcome', 'es');
 `);
 
 

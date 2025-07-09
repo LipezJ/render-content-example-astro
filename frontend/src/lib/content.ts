@@ -4,6 +4,7 @@ export interface Content {
   description: string;
   content: string;
   path: string;
+  lang: string;
 }
 
 export async function makeContentRoutes(repoUrl: string) {
@@ -23,6 +24,7 @@ export async function makeContentRoutes(repoUrl: string) {
     return {
       params: {
         content: item.path,
+        lang: item.lang || 'es'
       },
       props: {
         id: item.id,

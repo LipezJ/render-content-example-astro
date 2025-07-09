@@ -1,9 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
-
-import { type Content, makeContentRoutes } from "../lib/content";
-
-export const prerender = process.env.ASTRO_STATIC === 'true';
+import Layout from '../../layouts/Layout.astro';
+import { makeContentRoutes } from '../../lib/content';
 
 export async function getStaticPaths() {
   const hostname = import.meta.env.BACKEND_URL || 'http://localhost:3000';
@@ -26,7 +23,3 @@ let { title, content } = Astro.props;
     margin-bottom: 1rem;
   }
 </style>
-
-<script>
-  
-</script>
